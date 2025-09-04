@@ -1,0 +1,3 @@
+Reading file Widya-group.postman_collection.json
+Generating markdown file ...
+Documentation was created correctly Widya-group.md

@@ -41,10 +41,13 @@ class ProductController {
       const page = parseInt(req.query.page as string) || 1;
       const take = parseInt(req.query.take as string) || 10;
       const skip = (page - 1) * take;
+      const totalItems = await prisma.product.count();
+      const totalPages = Math.ceil(totalItems / take);
+
       const products = await productService.getAllProduct(skip, take);
       res.status(200).json({
         message: "Product fetched",
-        data: { products },
+        data: { products, page, totalPages },
       });
     } catch (error) {
       next(error);
@@ -57,11 +60,14 @@ class ProductController {
       const page = parseInt(req.query.page as string) || 1;
       const take = parseInt(req.query.take as string) || 10;
       const skip = (page - 1) * take;
+      const totalItems = await prisma.product.count({where:{userId:id}});
+      const totalPages = Math.ceil(totalItems / take);
+
       const products = await productService.getProductByUserId(id, skip, take);
 
       res.status(200).json({
         message: "Product fetched",
-        data: { products },
+        data: {products,page,totalPages}
       });
     } catch (error) {
       next(error);

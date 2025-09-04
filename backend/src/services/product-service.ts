@@ -24,6 +24,7 @@ class ProfuctService {
     return await prisma.product.findMany({
       skip,
       take,
+      
     });
   }
 
